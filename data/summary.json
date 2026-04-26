@@ -1,0 +1,14 @@
+{
+  "total": 7,
+  "passed": 5,
+  "failed": 2,
+  "broken": 0,
+  "skipped": 0,
+  "passRate": "71.43",
+  "duration": 64948,
+  "timestamp": "2026-04-26T19:27:08.140Z",
+  "build": "local",
+  "env": "QA",
+  "branch": "local",
+  "commit": "local"
+}

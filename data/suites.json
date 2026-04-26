@@ -1,0 +1,16 @@
+[
+  {
+    "name": "chromium",
+    "pass": 4,
+    "fail": 2,
+    "skip": 0,
+    "total": 6
+  },
+  {
+    "name": "setup",
+    "pass": 1,
+    "fail": 0,
+    "skip": 0,
+    "total": 1
+  }
+]
