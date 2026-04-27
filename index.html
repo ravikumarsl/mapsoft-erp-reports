@@ -145,6 +145,15 @@ main{padding:30px 32px;overflow-y:auto;}
   line-height:1.6;white-space:pre-wrap;word-break:break-all;}
 .failure-item.broken .failure-msg{color:#fdba74;}
 
+/* CLUSTERS */
+.cluster-list{display:flex;flex-direction:column;gap:10px;}
+.cluster-item{background:var(--bg3);border:1px solid var(--border2);border-radius:var(--rs);padding:12px 14px;position:relative;overflow:hidden;}
+.cluster-item::before{content:'';position:absolute;left:0;top:0;bottom:0;width:3px;background:var(--fail);}
+.cluster-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:8px;}
+.cluster-pattern{font-size:13px;color:var(--text);font-weight:500;}
+.cluster-count{font-size:11px;font-family:var(--mono);color:var(--fail);background:rgba(239,68,68,.12);padding:3px 8px;border-radius:4px;}
+.cluster-tests{font-size:11px;color:var(--text3);font-family:var(--mono);line-height:1.8;}
+
 /* SUITES TABLE */
 .tbl{width:100%;border-collapse:collapse;}
 .tbl th{text-align:left;font-size:10px;color:var(--text3);text-transform:uppercase;
@@ -254,8 +263,8 @@ main{padding:30px 32px;overflow-y:auto;}
         </div>
       </div>
       <div class="card">
-        <div class="card-title">Pass Rate Trend (across runs)</div>
-        <div class="ch160"><canvas id="trendChart" role="img" aria-label="Pass rate trend line chart"></canvas></div>
+        <div class="card-title">Pass / Fail Trend (across runs)</div>
+        <div class="ch160"><canvas id="trendChart" role="img" aria-label="Pass and fail trend line chart"></canvas></div>
       </div>
     </div>
     <div class="row-2">
@@ -264,8 +273,8 @@ main{padding:30px 32px;overflow-y:auto;}
         <div class="ch200"><canvas id="categoryChart" role="img" aria-label="Category bar chart"></canvas></div>
       </div>
       <div class="card">
-        <div class="card-title">Failures per Run</div>
-        <div class="ch200"><canvas id="failTrendChart" role="img" aria-label="Failure trend area chart"></canvas></div>
+        <div class="card-title">Failure Clusters (Common Patterns)</div>
+        <div class="cluster-list" id="cluster-list"></div>
       </div>
     </div>
     <div class="row-3">
@@ -367,22 +376,23 @@ const CHART_Y = { grid:{color:'rgba(255,255,255,0.04)'}, ticks:{color:'#555e7a',
 
 // ── INIT ─────────────────────────────────────────────────────────────────────
 async function init() {
-  let summary, categories, failures, suites = [], history = [];
+  let summary, categories, failures, clusters = [], suites = [], history = [];
   try {
     [summary, categories, failures] = await Promise.all([
-      loadJSON('data/summary.json'),
-      loadJSON('data/categories.json'),
-      loadJSON('data/failures.json'),
+      loadJSON('summary.json'),
+      loadJSON('categories.json'),
+      loadJSON('failures.json'),
     ]);
-    // optional — won't crash if missing
-    [suites, history] = await Promise.all([
-      loadJSON('data/suites.json').catch(() => []),
-      loadJSON('data/history.json').catch(() => []),
+    // optional files
+    [clusters, suites, history] = await Promise.all([
+      loadJSON('failureClusters.json').catch(() => []),
+      loadJSON('suites.json').catch(() => []),
+      loadJSON('history.json').catch(() => []),
     ]);
   } catch (err) {
     showError(
       'Could not load report data: ' + err.message +
-      '\n\nMake sure summary.json, categories.json and failures.json are in the same folder as this HTML file.'
+      '\n\nMake sure summary.json, categories.json and failures.json are in data/ folder.'
     );
     return;
   }
@@ -391,7 +401,7 @@ async function init() {
   $('app').style.display    = 'grid';
 
   renderSidebar(summary);
-  renderDashboard(summary, categories, history);
+  renderDashboard(summary, categories, clusters, history);
   renderFailures(failures);
   renderSuites(suites);
   renderHistory(history);
@@ -405,7 +415,7 @@ function renderSidebar(s) {
   $('sb-env').textContent    = s.env     || '—';
   $('sb-dur').textContent    = fmtMs(s.duration);
   $('sb-ts').textContent     = fmtDate(s.timestamp);
-  $('sb-author').textContent    = s.author     || '—';
+  $('sb-author').textContent = s.author  || '—';
   const failCount = (s.failed || 0) + (s.broken || 0);
   if (failCount > 0) {
     $('nav-failures').insertAdjacentHTML(
@@ -415,7 +425,7 @@ function renderSidebar(s) {
 }
 
 // ── DASHBOARD ─────────────────────────────────────────────────────────────────
-function renderDashboard(s, cats, history) {
+function renderDashboard(s, cats, clusters, history) {
   $('dash-title').textContent = `/ Build #${s.build || 'local'}`;
 
   const allOk = (s.failed || 0) + (s.broken || 0) === 0;
@@ -486,31 +496,75 @@ function renderDashboard(s, cats, history) {
       <span class="legend-val">${v}</span>
     </div>`).join('');
 
-  // trend & fail-trend from history
+  // COMBINED PASS/FAIL TREND from history
   const hLabels = history.length ? history.map(h => '#' + (h.build || '?')) : ['current'];
-  const hRates  = history.length ? history.map(h => parseFloat(h.passRate || h.passRateNum || 0)) : [rate];
-  const hFails  = history.length ? history.map(h => (h.failed||0) + (h.broken||0)) : [(s.failed||0)+(s.broken||0)];
+  const hPass   = history.length ? history.map(h => h.passed || 0) : [s.passed || 0];
+  const hFail   = history.length ? history.map(h => (h.failed||0) + (h.broken||0)) : [(s.failed||0)+(s.broken||0)];
 
   mkChart('trendChart', {
     type: 'line',
-    data: { labels: hLabels, datasets: [{
-      label: 'Pass Rate', data: hRates,
-      borderColor:'#4f8ef7', backgroundColor:'rgba(79,142,247,0.08)',
-      fill:true, tension:0.4, pointRadius:3, pointBackgroundColor:'#4f8ef7', borderWidth:2,
-    }]},
-    options: { responsive:true, maintainAspectRatio:false, plugins:{legend:{display:false}},
-      scales:{ x:CHART_X, y:{ ...CHART_Y, min:0, max:100, ticks:{...CHART_Y.ticks, callback:v=>v+'%'} } } }
-  });
-
-  mkChart('failTrendChart', {
-    type: 'line',
-    data: { labels: hLabels, datasets: [{
-      label: 'Failures', data: hFails,
-      borderColor:'#ef4444', backgroundColor:'rgba(239,68,68,0.10)',
-      fill:true, tension:0.4, pointRadius:3, pointBackgroundColor:'#ef4444', borderWidth:2,
-    }]},
-    options: { responsive:true, maintainAspectRatio:false, plugins:{legend:{display:false}},
-      scales:{ x:CHART_X, y:{ ...CHART_Y, beginAtZero:true } } }
+    data: { 
+      labels: hLabels, 
+      datasets: [
+        {
+          label: 'Passed', 
+          data: hPass,
+          borderColor:'#22c55e', 
+          backgroundColor:'rgba(34,197,94,0.08)',
+          fill:true, 
+          tension:0.4, 
+          pointRadius:3, 
+          pointBackgroundColor:'#22c55e', 
+          borderWidth:2,
+          yAxisID: 'y',
+        },
+        {
+          label: 'Failed', 
+          data: hFail,
+          borderColor:'#ef4444', 
+          backgroundColor:'rgba(239,68,68,0.08)',
+          fill:true, 
+          tension:0.4, 
+          pointRadius:3, 
+          pointBackgroundColor:'#ef4444', 
+          borderWidth:2,
+          yAxisID: 'y',
+        }
+      ]
+    },
+    options: { 
+      responsive:true, 
+      maintainAspectRatio:false, 
+      interaction: { mode: 'index', intersect: false },
+      plugins:{
+        legend:{
+          display:true,
+          position:'top',
+          align:'end',
+          labels:{
+            color:'#8b91a8',
+            font:{size:11,family:'Space Mono, monospace'},
+            boxWidth:12,
+            boxHeight:12,
+            padding:10,
+            usePointStyle:true,
+          }
+        },
+        tooltip:{
+          callbacks:{
+            label: ctx => ` ${ctx.dataset.label}: ${ctx.raw}`
+          }
+        }
+      },
+      scales:{ 
+        x:CHART_X, 
+        y:{ 
+          ...CHART_Y, 
+          beginAtZero:true,
+          position:'left',
+        }
+      } 
+    }
   });
 
   // category bar
@@ -524,6 +578,9 @@ function renderDashboard(s, cats, history) {
     options: { responsive:true, maintainAspectRatio:false, plugins:{legend:{display:false}},
       scales:{ x:{ ...CHART_X, grid:{display:false} }, y:CHART_Y } }
   });
+
+  // FAILURE CLUSTERS
+  renderClusters(clusters);
 
   // run stats card
   $('run-stats').innerHTML = [
@@ -576,6 +633,27 @@ function renderDashboard(s, cats, history) {
       <span class="stat-label">${l}</span>
       <span class="stat-val">${v}</span>
     </div>`).join('');
+}
+
+// ── FAILURE CLUSTERS ──────────────────────────────────────────────────────────
+function renderClusters(clusters) {
+  if (!clusters.length) {
+    $('cluster-list').innerHTML = '<div class="no-data">No failure clusters detected.</div>';
+    return;
+  }
+  
+  // Sort by count descending, take top 5
+  const topClusters = clusters.sort((a, b) => b.count - a.count).slice(0, 5);
+  
+  $('cluster-list').innerHTML = topClusters.map(c => `
+    <div class="cluster-item">
+      <div class="cluster-header">
+        <div class="cluster-pattern">${esc(c.pattern)}</div>
+        <div class="cluster-count">${c.count} test${c.count !== 1 ? 's' : ''}</div>
+      </div>
+      <div class="cluster-tests">${c.tests.slice(0, 3).map(t => esc(t)).join(' • ')}${c.tests.length > 3 ? ' • ...' : ''}</div>
+    </div>
+  `).join('');
 }
 
 // ── FAILURES ──────────────────────────────────────────────────────────────────

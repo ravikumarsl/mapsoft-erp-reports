@@ -1,16 +1,18 @@
 [
   {
     "name": "chromium",
-    "pass": 4,
+    "pass": 5,
     "fail": 2,
-    "skip": 0,
-    "total": 6
+    "skip": 1,
+    "total": 8,
+    "duration": 0
   },
   {
     "name": "setup",
     "pass": 1,
     "fail": 0,
     "skip": 0,
-    "total": 1
+    "total": 1,
+    "duration": 0
   }
 ]
