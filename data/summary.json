@@ -1,4 +1,5 @@
 {
+<<<<<<< HEAD
   "total": 9,
   "passed": 6,
   "failed": 2,
@@ -8,7 +9,18 @@
   "duration": 13743744,
   "timestamp": "2026-04-27T12:19:09.459Z",
   "build": "local",
+=======
+  "total": 7,
+  "passed": 4,
+  "failed": 3,
+  "broken": 0,
+  "skipped": 0,
+  "passRate": "57.14",
+  "duration": 71720,
+  "timestamp": "2026-04-27T07:48:28.320Z",
+  "build": "3",
+>>>>>>> e5f3e391c12c14b2d0ee196f61de90eb8d0fe538
   "env": "QA",
-  "branch": "local",
-  "commit": "local"
+  "branch": "main",
+  "commit": "c84085d"
 }

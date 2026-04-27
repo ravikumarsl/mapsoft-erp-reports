@@ -1,4 +1,5 @@
 {
+<<<<<<< HEAD
   "Other": [
     {
       "suite": "ui/createCustomer.spec.ts:13:7",
@@ -8,6 +9,19 @@
       "trace": "ConnectionError: Failed to connect to WIN-F1GNDO1TRN5:1433 - getaddrinfo ENOTFOUND win-f1gndo1trn5\n    at connectListener (C:\\Users\\Ravikumar\\PlaywrightFrameworks\\MapsoftERPPlaywrightFramework\\node_modules\\mssql\\lib\\tedious\\connection-pool.js:85:17)\n    at Connection.onConnect (C:\\Users\\Ravikumar\\PlaywrightFrameworks\\MapsoftERPPlaywrightFramework\\node_modules\\tedious\\src\\connection.ts:1812:9)\n    at Connection.emit (C:\\Users\\Ravikumar\\PlaywrightFrameworks\\MapsoftERPPlaywrightFramework\\node_modules\\tedious\\src\\connection.ts:1974:18)\n    at C:\\Users\\Ravikumar\\PlaywrightFrameworks\\MapsoftERPPlaywrightFramework\\node_modules\\tedious\\src\\connection.ts:1834:14",
       "testId": "12f7e1b8-bd8d-4f78-87ba-63473dad85b9"
     },
+=======
+  "Timeout Issue": [
+    {
+      "suite": "ui/createProduct.spec.ts:13:7",
+      "name": "[UI], [smoke] Create Product",
+      "status": "failed",
+      "message": "TimeoutError: page.waitForSelector: Timeout 15000ms exceeded.\nCall log:\n  - waiting for locator('li[role=\"option\"]') to be visible\n",
+      "trace": "TimeoutError: page.waitForSelector: Timeout 15000ms exceeded.\nCall log:\n  - waiting for locator('li[role=\"option\"]') to be visible\n\n    at CreateProductPage.selectProductType (C:\\Users\\Ravikumar\\PlaywrightFrameworks\\MapsoftERPPlaywrightFramework\\pages\\createProduct.page.ts:97:19)\n    at C:\\Users\\Ravikumar\\PlaywrightFrameworks\\MapsoftERPPlaywrightFramework\\tests\\ui\\createProduct.spec.ts:23:5",
+      "testId": "61ed6f78-09cd-498f-aacb-ff3e442e8127"
+    }
+  ],
+  "Other": [
+>>>>>>> e5f3e391c12c14b2d0ee196f61de90eb8d0fe538
     {
       "suite": "ui/createCustomer.spec.ts:13:7",
       "name": "[UI], [DB], [smoke] Create Basic Customer",
@@ -22,6 +36,7 @@
       "status": "failed",
       "message": "ConnectionError: Failed to connect to WIN-F1GNDO1TRN5:1433 - getaddrinfo ENOTFOUND win-f1gndo1trn5",
       "trace": "ConnectionError: Failed to connect to WIN-F1GNDO1TRN5:1433 - getaddrinfo ENOTFOUND win-f1gndo1trn5\n    at connectListener (C:\\Users\\Ravikumar\\PlaywrightFrameworks\\MapsoftERPPlaywrightFramework\\node_modules\\mssql\\lib\\tedious\\connection-pool.js:85:17)\n    at Connection.onConnect (C:\\Users\\Ravikumar\\PlaywrightFrameworks\\MapsoftERPPlaywrightFramework\\node_modules\\tedious\\src\\connection.ts:1812:9)\n    at Connection.emit (C:\\Users\\Ravikumar\\PlaywrightFrameworks\\MapsoftERPPlaywrightFramework\\node_modules\\tedious\\src\\connection.ts:1974:18)\n    at C:\\Users\\Ravikumar\\PlaywrightFrameworks\\MapsoftERPPlaywrightFramework\\node_modules\\tedious\\src\\connection.ts:1834:14",
+<<<<<<< HEAD
       "testId": "ac1ecec7-358f-4cba-8d70-aeb087a58ea9"
     },
     {
@@ -50,5 +65,9 @@
       "trace": "TimeoutError: page.goto: Timeout 30000ms exceeded.\nCall log:\n  - navigating to \"https://qa.mapsofterp.in/App/\", waiting until \"load\"\n\n    at C:\\Users\\Ravikumar\\PlaywrightFrameworks\\MapsoftERPPlaywrightFramework\\tests\\setup\\auth.setup.ts:8:14",
       "testId": "c53a9c03-1415-4818-b7a7-724183c6a80e"
     }
+=======
+      "testId": "d2c01d11-d861-4837-a5ef-bb6a1b3cf5d2"
+    }
+>>>>>>> e5f3e391c12c14b2d0ee196f61de90eb8d0fe538
   ]
 }

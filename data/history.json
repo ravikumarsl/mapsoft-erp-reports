@@ -33,6 +33,7 @@
   },
   {
     "total": 7,
+<<<<<<< HEAD
     "passed": 5,
     "failed": 2,
     "broken": 0,
@@ -110,5 +111,20 @@
     "commit": "local",
     "flaky": false,
     "passRateNum": 66.67
+=======
+    "passed": 4,
+    "failed": 3,
+    "broken": 0,
+    "skipped": 0,
+    "passRate": "57.14",
+    "duration": 71720,
+    "timestamp": "2026-04-27T07:48:28.320Z",
+    "build": "3",
+    "env": "QA",
+    "branch": "main",
+    "commit": "c84085d",
+    "flaky": false,
+    "passRateNum": 57.14
+>>>>>>> e5f3e391c12c14b2d0ee196f61de90eb8d0fe538
   }
 ]
