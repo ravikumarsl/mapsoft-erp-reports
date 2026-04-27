@@ -1,0 +1,50 @@
+[
+  {
+    "total": 7,
+    "passed": 4,
+    "failed": 3,
+    "broken": 0,
+    "skipped": 0,
+    "passRate": "57.14",
+    "duration": 71720,
+    "timestamp": "2026-04-27T06:16:27.896Z",
+    "build": "local",
+    "env": "QA",
+    "branch": "local",
+    "commit": "local",
+    "flaky": false,
+    "passRateNum": 57.14
+  },
+  {
+    "total": 7,
+    "passed": 4,
+    "failed": 3,
+    "broken": 0,
+    "skipped": 0,
+    "passRate": "57.14",
+    "duration": 71720,
+    "timestamp": "2026-04-27T06:32:24.718Z",
+    "build": "local",
+    "env": "QA",
+    "branch": "local",
+    "commit": "local",
+    "flaky": false,
+    "passRateNum": 57.14
+  },
+  {
+    "total": 7,
+    "passed": 4,
+    "failed": 3,
+    "broken": 0,
+    "skipped": 0,
+    "passRate": "57.14",
+    "duration": 71720,
+    "timestamp": "2026-04-27T07:48:28.320Z",
+    "build": "3",
+    "env": "QA",
+    "branch": "main",
+    "commit": "c84085d",
+    "flaky": false,
+    "passRateNum": 57.14
+  }
+]
