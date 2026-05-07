@@ -14,7 +14,7 @@
         },
         {
           "name": "auth",
-          "value": "{\"user\":{\"id\":2242,\"firstName\":\"Automation\",\"lastName\":\"Tester\"},\"roles\":[{\"name\":\"Admin\",\"description\":\"Administrator\"}],\"menus\":[],\"token\":\"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjIyNDIiLCJleHAiOjE3NzgxNDg2ODgsImlzcyI6Im1hcHNvZnQuY29tIiwiYXVkIjoibWFwc29mdC5jb20ifQ.m7bWQxAfUFkHD0DNrJFSTS0IGDy8Kd0zbt_-I4FF2cY\",\"tenant\":{\"tenantCode\":\"qa\",\"tenantName\":\"\"}}"
+          "value": "{\"user\":{\"id\":2242,\"firstName\":\"Automation\",\"lastName\":\"Tester\"},\"roles\":[{\"name\":\"Admin\",\"description\":\"Administrator\"}],\"menus\":[],\"token\":\"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjIyNDIiLCJleHAiOjE3NzgxNTAxNTIsImlzcyI6Im1hcHNvZnQuY29tIiwiYXVkIjoibWFwc29mdC5jb20ifQ.YE3wn5tCv-Oh1W-ng2MW5Zl6cKwoNv0zz3pTYSmOU9E\",\"tenant\":{\"tenantCode\":\"qa\",\"tenantName\":\"\"}}"
         }
       ]
     }
