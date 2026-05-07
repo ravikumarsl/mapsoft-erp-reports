@@ -379,15 +379,15 @@ async function init() {
   let summary, categories, failures, clusters = [], suites = [], history = [];
   try {
     [summary, categories, failures] = await Promise.all([
-      loadJSON('data/summary.json'),
-      loadJSON('data/categories.json'),
-      loadJSON('data/failures.json'),
+      loadJSON('/data/summary.json'),
+      loadJSON('/data/categories.json'),
+      loadJSON('/data/failures.json'),
     ]);
     // optional files
     [clusters, suites, history] = await Promise.all([
-      loadJSON('data/failureClusters.json').catch(() => []),
-      loadJSON('data/suites.json').catch(() => []),
-      loadJSON('data/history.json').catch(() => []),
+      loadJSON('/data/failureClusters.json').catch(() => []),
+      loadJSON('/data/suites.json').catch(() => []),
+      loadJSON('/data/history.json').catch(() => []),
     ]);
   } catch (err) {
     showError(
