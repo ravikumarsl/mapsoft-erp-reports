@@ -1,10 +1,6 @@
 {
-  "UI": 0,
+  "UI": 7,
   "API": 0,
   "DB": 0,
-<<<<<<< HEAD
-  "OTHER": 22
-=======
-  "OTHER": 7
->>>>>>> e5f3e391c12c14b2d0ee196f61de90eb8d0fe538
+  "OTHER": 0
 }
