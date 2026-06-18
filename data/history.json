@@ -65,18 +65,18 @@
   },
   {
     "total": 25,
-    "passed": 0,
-    "failed": 1,
+    "passed": 13,
+    "failed": 12,
     "broken": 0,
-    "skipped": 24,
-    "passRate": "0.00",
-    "duration": 264,
-    "timestamp": "2026-06-18T07:42:36.880Z",
-    "build": "66",
+    "skipped": 0,
+    "passRate": "52.00",
+    "duration": 938581,
+    "timestamp": "2026-06-18T11:26:31.204Z",
+    "build": "67",
     "env": "QA",
     "branch": "main",
-    "commit": "c04a013",
+    "commit": "2c5a517",
     "flaky": false,
-    "passRateNum": 0
+    "passRateNum": 52
   }
 ]
