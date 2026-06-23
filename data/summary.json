@@ -1,14 +1,14 @@
 {
-  "total": 25,
+  "total": 17,
   "passed": 13,
-  "failed": 12,
+  "failed": 4,
   "broken": 0,
   "skipped": 0,
-  "passRate": "52.00",
-  "duration": 938581,
-  "timestamp": "2026-06-18T11:26:31.204Z",
-  "build": "67",
+  "passRate": "76.47",
+  "duration": 416290,
+  "timestamp": "2026-06-23T05:21:16.696Z",
+  "build": "75",
   "env": "QA",
   "branch": "main",
-  "commit": "2c5a517"
+  "commit": "716a507"
 }
